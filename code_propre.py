@@ -38,14 +38,14 @@ def model_entrainement(clf, X_train, y_train):
     start = time()
     clf.fit(X_train, y_train)
     end = time()
-    print("Modèle d'apprentissage {:2f} seconds".format(end-start))
+   # print("Modèle d'apprentissage {:2f} seconds".format(end-start))
 
 # Fonctions réalisant nos prédictions
 def predict_labels(clf, features, target):
     start = time()
     y_pred = clf.predict(features)
     end = time()
-    print("Etablis nos prédictions en {:2f} seconds".format(end-start))
+   # print("Etablis nos prédictions en {:2f} seconds".format(end-start))
 
     acc = sum(target == y_pred) / float(len(y_pred))
 
@@ -56,16 +56,16 @@ def model(clf, X_train, y_train, X_test, y_test):
     model_entrainement(clf, X_train, y_train)
 
     f1, acc = predict_labels(clf, X_train, y_train)
-    print("train set:")
-    print("-" * 20)
-    print("F1 Score:{}".format(f1))
-    print("Accuracy:{}".format(acc))
+   # print("train set:")
+   # print("-" * 20)
+   # print("F1 Score:{}".format(f1))
+   # print("Accuracy:{}".format(acc))
 
-    f1, acc = predict_labels(clf, X_test, y_test)
-    print("test set:")
-    print("-" * 20)
-    print("F1 Score:{}".format(f1))
-    print("Accuracy:{}".format(acc))
+   # f1, acc = predict_labels(clf, X_test, y_test)
+   # print("test set:")
+   # print("-" * 20)
+   # print("F1 Score:{}".format(f1))
+   # print("Accuracy:{}".format(acc))
 
 # Définition de nos variables utiles pour réaliser nos prédictions
 vars_X = ['home_encoded', 'away_encoded', 'HTHG', 'HTAG', 'HS',
@@ -112,24 +112,18 @@ nbClassifier = GaussianNB()
 rfClassifier = RandomForestClassifier()
 
 # Résultats de nos différents modèles
-print()
-print("Régression logistique 1")
-print("-" * 20)
+
+#Régression logistique 1
 model(lr_classifier1, X_train, Y_train, X_test, Y_test)
 
-print()
-print("Régression logistique 2")
-print("-" * 20)
+
+#Régression logistique 2
 model(lr_classifier2, X_train, Y_train, X_test, Y_test)
 
-print()
-print("Classification naive Bayésienne")
-print("-" * 20)
+#Classification naive Bayésienne
 model(nbClassifier, X_train, Y_train, X_test, Y_test)
 
-print()
-print("Forêts aléatoires")
-print("-" * 20)
+#Forêts aléatoires
 model(rfClassifier, X_train, Y_train, X_test, Y_test)
 
 # On sélectionne une année pour nous intéresser maintenant aux paris sportifs
@@ -148,10 +142,10 @@ X = df[['HTHG', 'HTAG', 'HS', 'AS', 'HTR']]
 y = df['FTR'].replace({"H": 0, "D": 1, "A": 2})
 y = y.astype(float)
 # Séparer le dataframe en jeu d'entraînement et jeu de test
-X_train2, X_test2, y_train2, y_test2 = train_test_split(X, y, test_size=0.2)
+X_train2, X_test2, y_train2, y_test2 = train_test_split(X, y, test_size=0.2, random_state = 42)
 
 # Entraîner un modèle de régression logistique
-lr = linear_model.LogisticRegression(C=1.0)
+lr = LogisticRegression(multi_class = 'ovr' , max_iter = 500)
 lr.fit(X_train2, y_train2)
 
 # Prédire les classes pour les données de test
@@ -163,7 +157,7 @@ y_proba = lr.predict_proba(X_test2)
 
 # Calculer l'accuracy des prédictions
 accuracy = (y_pred == y_test2).mean()
-print("Accuracy :", accuracy)
+
 
 def simulate_year_of_bets(df, y_pred, y_test2, bet_amount=5):
     # Initialiser notre compteur de départ
@@ -201,11 +195,10 @@ def simulate_year_of_bets(df, y_pred, y_test2, bet_amount=5):
     return total_winnings, win_count, loss_count
 
 # Appeler la fonction pour simuler une année de paris
-print(simulate_year_of_bets(df, y_pred, y_test2))
+print("Votre gain annuel avec PronoSocker (avec le nombre de paris gagnés et le nombre de paris perdus en misant 5 euros à chaque match) : " ,simulate_year_of_bets(df, y_pred, y_test2))
 
 cm = pd.crosstab(y_test2, y_pred, rownames=['Classe réelle'], colnames=['Classe prédite'])
-cm
 
 from sklearn.metrics import classification_report
 
-print(classification_report(y_test2, y_pred))
+classification_report(y_test2, y_pred)
