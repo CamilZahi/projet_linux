@@ -1,6 +1,7 @@
+# -*- coding: utf-8 -*-
+
 import pandas as pd
 import numpy as np
-import seaborn as sns
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.naive_bayes import GaussianNB
@@ -13,22 +14,22 @@ from sklearn.preprocessing import LabelEncoder
 from time import time
 from sklearn.metrics import f1_score
 
-df1 = pd.read_csv("data/2007-2008.csv")
-df2 = pd.read_csv("data/2008-2009.csv")
-df3 = pd.read_csv("data/2009-2010.csv")
-df4 = pd.read_csv("data/2010-2011.csv")
-df5 = pd.read_csv("data/2011-2012.csv")
-df6 = pd.read_csv("data/2012-2013.csv")
-df7 = pd.read_csv("data/2013-2014.csv")
-df8 = pd.read_csv("data/2014-2015.csv")
-df7 = pd.read_csv("data/2015-2016.csv")
-df9 = pd.read_csv("data/2016-2017.csv")
-df10 = pd.read_csv("data/2017-2018.csv")
-df11 = pd.read_csv("data/2018-2019.csv")
-df12 = pd.read_csv("data/2019-2020.csv")
-df13 = pd.read_csv("data/2020-2021.csv")
-df14 = pd.read_csv("data/2021-2022.csv")
-df15 = pd.read_csv("data/2022-2023.csv")
+df1 = pd.read_csv("data/2008.csv")
+df2 = pd.read_csv("data/2009.csv")
+df3 = pd.read_csv("data/2010.csv")
+df4 = pd.read_csv("data/2011.csv")
+df5 = pd.read_csv("data/2012.csv")
+df6 = pd.read_csv("data/2013.csv")
+df7 = pd.read_csv("data/2014.csv")
+df8 = pd.read_csv("data/2015.csv")
+df7 = pd.read_csv("data/2016.csv")
+df9 = pd.read_csv("data/2017.csv")
+df10 = pd.read_csv("data/2018.csv")
+df11 = pd.read_csv("data/2019.csv")
+df12 = pd.read_csv("data/2020.csv")
+df13 = pd.read_csv("data/2021.csv")
+df14 = pd.read_csv("data/2022.csv")
+df15 = pd.read_csv("data/2023.csv")
 
 data = pd.concat([df1,df2,df3,df4,df5,df6,df7,df8,df9,df10,df11,df12,df13,df14,df15])
 
@@ -94,7 +95,7 @@ data.isna().sum()
 # Possiblement 2 observations à supprimer
 
 # Suppression de nos observations manquantes
-print(data[data.isna().any(axis=1)])
+data[data.isna().any(axis=1)]
 data = data.dropna(axis=0)
 
 # Variables explicatives et variable à expliquer
@@ -133,10 +134,10 @@ model(rfClassifier, X_train, Y_train, X_test, Y_test)
 
 # On sélectionne une année pour nous intéresser maintenant aux paris sportifs
 
-df = pd.read_csv("data/2017-2018.csv")
+df = pd.read_csv("data/2018.csv")
 
 # Suppression de nos observations manquantes
-print(df[df.isna().any(axis=1)])
+df[df.isna().any(axis=1)]
 df = df.dropna(axis=0)
 
 # Sélectionner les colonnes d'entrée
@@ -159,8 +160,6 @@ y_pred = lr.predict(X_test2)
 # Calculez les probabilités de chaque classe
 y_proba = lr.predict_proba(X_test2)
 
-# Afficher les probabilités de chaque classe
-print(y_proba)
 
 # Calculer l'accuracy des prédictions
 accuracy = (y_pred == y_test2).mean()
@@ -202,7 +201,7 @@ def simulate_year_of_bets(df, y_pred, y_test2, bet_amount=5):
     return total_winnings, win_count, loss_count
 
 # Appeler la fonction pour simuler une année de paris
-simulate_year_of_bets(df, y_pred, y_test2)
+print(simulate_year_of_bets(df, y_pred, y_test2))
 
 cm = pd.crosstab(y_test2, y_pred, rownames=['Classe réelle'], colnames=['Classe prédite'])
 cm
