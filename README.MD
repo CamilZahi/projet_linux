@@ -4,9 +4,13 @@ Description : PronoSocker est une application qui prédit les résultats des mat
 
 Prérequis : Les librairies présentes dans le fichier requirements.txt
 
-Installation du projet : 1) Commencer par réaliser un git clone depuis notre github avec la commande : "git clone https://github.com/CamilZahi/projet_linux.git 
-                         2) Se placer sur la branche master avec la commande : "git checkout master"
-                         3) Lancer le script install.sh -> ./install.sh
-                         4) Lancer le script launch.sh -> ./launch.sh
+Installation du projet :
+ 1) Commencer par réaliser un git clone depuis notre github avec la commande : "git clone https://github.com/CamilZahi/projet_linux.git 
+                        
+ 2) Se placer sur la branche master avec la commande : "git checkout master"
+                       
+ 3) Lancer le script install.sh -> ./install.sh
+                        
+ 4) Lancer le script launch.sh -> ./launch.sh
 
 Lecture des résultats : Profitez des résultats et n'oubliez pas Riche avec le foot ! 
